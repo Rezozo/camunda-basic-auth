@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1t9s9xv" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0">
+  <bpmn:process id="Auth-process" name="auth" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="User wants to login">
+      <bpmn:outgoing>Flow_0fhorm9</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0fhorm9" sourceRef="StartEvent_1" targetRef="Activity_183s99k" />
+    <bpmn:userTask id="Activity_183s99k" name="Account data entry">
+      <bpmn:incoming>Flow_0fhorm9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1o8brb1</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1o8brb1" sourceRef="Activity_183s99k" targetRef="Activity_1wybda6" />
+    <bpmn:endEvent id="Event_0ex9b7n" name="Authentication response sent">
+      <bpmn:incoming>Flow_08slym0</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_08slym0" sourceRef="Activity_1wybda6" targetRef="Event_0ex9b7n" />
+    <bpmn:serviceTask id="Activity_1wybda6" name="Validation and response generation" camunda:delegateExpression="#{authenticationServiceImpl}">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_1o8brb1</bpmn:incoming>
+      <bpmn:outgoing>Flow_08slym0</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Event_0z9wdaz" attachedToRef="Activity_1wybda6">
+      <bpmn:outgoing>Flow_00w8y8y</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_11pgq72" errorRef="Error_1p0cefj" />
+    </bpmn:boundaryEvent>
+    <bpmn:endEvent id="Event_051fmfg" name="Invalid data">
+      <bpmn:incoming>Flow_00w8y8y</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_00w8y8y" sourceRef="Event_0z9wdaz" targetRef="Event_051fmfg" />
+  </bpmn:process>
+  <bpmn:error id="Error_1p0cefj" name="BadCredentialsException" errorCode="BadCredentialsException" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Auth-process">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="209" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="163" y="252" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lrd7io_di" bpmnElement="Activity_183s99k">
+        <dc:Bounds x="270" y="187" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ex9b7n_di" bpmnElement="Event_0ex9b7n">
+        <dc:Bounds x="592" y="209" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="575" y="252" width="71" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nxdj3n_di" bpmnElement="Activity_1wybda6">
+        <dc:Bounds x="430" y="187" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_051fmfg_di" bpmnElement="Event_051fmfg">
+        <dc:Bounds x="592" y="82" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="582" y="125" width="57" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1960xmf_di" bpmnElement="Event_0z9wdaz">
+        <dc:Bounds x="462" y="169" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0fhorm9_di" bpmnElement="Flow_0fhorm9">
+        <di:waypoint x="215" y="227" />
+        <di:waypoint x="270" y="227" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o8brb1_di" bpmnElement="Flow_1o8brb1">
+        <di:waypoint x="370" y="227" />
+        <di:waypoint x="430" y="227" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08slym0_di" bpmnElement="Flow_08slym0">
+        <di:waypoint x="530" y="227" />
+        <di:waypoint x="592" y="227" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00w8y8y_di" bpmnElement="Flow_00w8y8y">
+        <di:waypoint x="480" y="169" />
+        <di:waypoint x="480" y="100" />
+        <di:waypoint x="592" y="100" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
