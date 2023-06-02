@@ -1,7 +1,7 @@
 # Basic auth sample🔑
 
 ### Used Technologies:
-* **Kotlin + Spring (Boot, Data, Security) + JPA / Hibernate + PostgreSQL**
+* **Kotlin + Spring (Boot, Data, Security) + JPA / Hibernate + PostgreSQL + Camunda**
 * **JUnit + Cucumber**
 
 ## Auth process ⚙
